@@ -10,8 +10,6 @@ Tamagochi::Tamagochi(int pHunger, int pHappiness)
 
 Tamagochi::Tamagochi()
 {
-	//hunger;
-	//bordem;
 }
 
 void Tamagochi::talk()
@@ -69,4 +67,32 @@ void Tamagochi::eat()
 		cout << "Are you crazy master, stop shoving stuff in my mouth!" << endl;
 		cout << "Your Tamagochi's hunger is at " << hunger << "%" << endl;
 	}
+}
+
+void Tamagochi::decreaseStats()
+{
+	if (hunger > 0 && happiness > 0)
+	{
+		hunger -= 5;
+		happiness -= 5;
+		cout << "Your Tamagochi gets hungrier and less happy..." << endl;
+	}
+}
+
+bool Tamagochi::death()
+{
+	if (hunger <= 0)
+	{
+		cout << "Your Tamagochi dies of hunger..." << endl;
+		return true;
+	}
+
+	if (happiness <= 0)
+	{
+		cout << "Your Tamagochi dies of depression..." << endl;
+		return true;
+	}
+
+
+	return false;
 }

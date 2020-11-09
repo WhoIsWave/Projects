@@ -2,13 +2,18 @@
 #include <string>
 #include "tamagochi.h"
 #include <time.h>
+#include <chrono>
+#include <thread>
 
 using namespace std;
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono; // nanoseconds, system_clock, seconds
 
 void Menu();
 void playerChoiceManagement();
 void questionLoop();
-void randomEvents();
+void timer();
+bool randomEvents();
 
 bool quitGame = false;
 string playerChoice;
@@ -23,7 +28,9 @@ int main()
 	{
 		questionLoop();
 		playerChoiceManagement();
-		randomEvents();
+		quitGame = randomEvents();
+		quitGame = pet.death();
+		timer();
 	}
 
 }
@@ -51,18 +58,23 @@ void playerChoiceManagement()
 		pet.play();
 	}
 	
-	if (playerChoice == "talk")
+	else if (playerChoice == "talk")
 	{
 		pet.talk();
 	}
 
-	else 
+	else if (playerChoice == "feed")
 	{
 		pet.eat();
 	}
+
+	else 
+	{
+		cout << "Re-type your action please." << endl;
+	}
 }
 
-void randomEvents()
+bool randomEvents()
 {
 	srand(time(NULL));
 	int number = rand() % 10 + 1;
@@ -71,6 +83,13 @@ void randomEvents()
 		cout << "------RAMDON EVENT-------" << endl;
 		cout << "Your Tamagochi decided to take a walk around town..." << endl;
 		cout << "He suddenly gets jumped by a bunch of Thug Tamagochi!" << endl;
-		cout << "Poor Tamagochi... he will be remembered..." << endl;
+		cout << "Poor Tamagochi...he will be remembered..." << endl;
+		return true;
 	}
+}
+
+void timer()
+{
+	sleep_for(seconds(3));
+	pet.decreaseStats();
 }

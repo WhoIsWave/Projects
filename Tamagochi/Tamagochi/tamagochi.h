@@ -11,6 +11,8 @@ public:
 	void eat();
 	void talk();
 	void play();
+	void decreaseStats();
+	bool death();
 
 private:
 	int hunger;
